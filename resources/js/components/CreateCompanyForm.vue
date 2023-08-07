@@ -40,6 +40,7 @@ export default {
     methods: {
         handleFileChange(event) {
             this.formData.logo = event.target.files[0];
+                 console.log('Selected logo:', this.formData.logo);
         },
         submitForm() {
             const formData = new FormData();
@@ -47,6 +48,9 @@ export default {
             formData.append('email', this.formData.email);
             formData.append('website', this.formData.website);
             formData.append('logo', this.formData.logo);
+
+            console.log('Form data:', formData.get('name'));
+            console.log('Logo file:', formData.get('logo'));
 
             axios
                 .post('/api/companies', formData, {

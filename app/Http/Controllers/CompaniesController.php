@@ -14,10 +14,10 @@ class CompaniesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-{
-    $companies = Company::paginate(10);
-    return view('companies.index', compact('companies'));
-}
+    {
+        $companies = Company::paginate(10);
+        return view('companies.index', compact('companies'));
+    }
 
 
     /**
@@ -39,7 +39,6 @@ class CompaniesController extends Controller
     public function store(Request $request)
     {
 
-        dd($request->all());
         // Validation for company creation
         $request->validate([
             'name' => 'required',
@@ -59,6 +58,7 @@ class CompaniesController extends Controller
             $logoPath = $request->file('logo')->store('public/logos');
             $company->logo = $logoPath;
         }
+
 
         $company->save();
 
@@ -84,12 +84,13 @@ class CompaniesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
+   public function edit($companyId)
+{
 
-        $company = Company::findOrFail($id);
-        return view('companies.edit', compact('company'));
-    }
+    $company = Company::findOrFail($companyId);
+    return view('companies.edit', compact('company'));
+}
+
 
     /**
      * Update the specified resource in storage.
@@ -137,8 +138,4 @@ class CompaniesController extends Controller
 
         return redirect()->route('companies.index')->with('success', 'Company deleted successfully.');
     }
-
-
-
-
 }

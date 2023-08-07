@@ -28,8 +28,10 @@ Vue.component(
 
 import CompaniesList from "./components/CompaniesList.vue";
 import CreateCompanyForm from "./components/CreateCompanyForm.vue";
+import EditCompanyForm from "./components/EditCompanyForm.vue";
 Vue.component("companies-list", CompaniesList);
 Vue.component("create-company-form", CreateCompanyForm);
+Vue.component("edit-company-form", EditCompanyForm);
 
 const app = new Vue({
     el: "#app",

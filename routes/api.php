@@ -20,3 +20,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('/companies',[CompanyController::class,'index']);
 Route::post('/companies', [CompanyController::class, 'store']);
+
+Route::get('/companies/{companyId}', [CompanyController::class, 'show']);
+Route::put('/companies/{companyId}', [CompanyController::class, 'update']);

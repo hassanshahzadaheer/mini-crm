@@ -23,16 +23,18 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 
 
-
-
-
 Route::group(['middleware' => ['auth']], function () {
     // Your authenticated routes go here
-
-    // If you want to further restrict access to admin users only:
     Route::group(['middleware' => ['role:admin']], function () {
         Route::get('/companies', 'App\Http\Controllers\CompaniesController@index')->name('companies.index');
         Route::get('/companies/create', 'App\Http\Controllers\CompaniesController@create')->name('companies.create');
+
+Route::get('/companies/{companyId}/edit', [CompaniesController::class, 'edit'])->name('companies.edit');
+
+Route::put('/companies/{companyId}/update', [CompaniesController::class, 'edit'])->name('companies.edit');
+
+
+
 
     });
 });
