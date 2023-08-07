@@ -23,3 +23,5 @@ Route::post('/companies', [CompanyController::class, 'store']);
 
 Route::get('/companies/{companyId}', [CompanyController::class, 'show']);
 Route::put('/companies/{companyId}', [CompanyController::class, 'update']);
+
+Route::delete('/companies/{id}', [CompanyController::class, 'destroy']);

@@ -5085,14 +5085,32 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    var _this = this;
-    console.log('Fetching data...');
-    axios__WEBPACK_IMPORTED_MODULE_0___default().get('/api/companies').then(function (response) {
-      console.log('Data received:', response.data.data);
-      _this.companies = response.data.data;
-    })["catch"](function (error) {
-      console.error('Error fetching data:', error);
-    });
+    this.fetchData();
+  },
+  methods: {
+    fetchData: function fetchData() {
+      var _this = this;
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get('/api/companies').then(function (response) {
+        _this.companies = response.data.data;
+      })["catch"](function (error) {
+        console.error('Error fetching data:', error);
+      });
+    },
+    confirmDelete: function confirmDelete(id) {
+      if (window.confirm('Are you sure you want to delete this company?')) {
+        this.deleteCompany(id);
+      }
+    },
+    deleteCompany: function deleteCompany(companyId) {
+      var _this2 = this;
+      console.log("Deleting company with ID ".concat(companyId, "..."));
+      axios__WEBPACK_IMPORTED_MODULE_0___default()["delete"]("/api/companies/".concat(companyId)).then(function (response) {
+        console.log('Company deleted:', response.data.message);
+        _this2.fetchData();
+      })["catch"](function (error) {
+        console.error('Error deleting company:', error);
+      });
+    }
   }
 });
 
@@ -5194,7 +5212,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       var _this = this;
       axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/companies/".concat(this.companyId)).then(function (response) {
         var companyData = response.data.data;
-        _this.formData = _objectSpread({}, companyData); // Copy data to formData
+        _this.formData = _objectSpread({}, companyData);
       })["catch"](function (error) {
         console.error('Error fetching company data:', error);
       });
@@ -5275,7 +5293,14 @@ var render = function render() {
       attrs: {
         href: company.website
       }
-    }, [_vm._v(_vm._s(company.name))])]), _vm._v(" "), _c("td", [_vm._v(_vm._s(company.email))])]);
+    }, [_vm._v(_vm._s(company.name))])]), _vm._v(" "), _c("td", [_vm._v(_vm._s(company.email))]), _vm._v(" "), _c("td", [_c("button", {
+      staticClass: "btn btn-danger btn-sm",
+      on: {
+        click: function click($event) {
+          return _vm.confirmDelete(company.id);
+        }
+      }
+    }, [_vm._v("Delete")])])]);
   }), 0)])]);
 };
 var staticRenderFns = [function () {
@@ -5297,7 +5322,11 @@ var staticRenderFns = [function () {
     attrs: {
       scope: "col"
     }
-  }, [_vm._v("Email")])])]);
+  }, [_vm._v("Email")]), _vm._v(" "), _c("th", {
+    attrs: {
+      scope: "col"
+    }
+  }, [_vm._v("Actions")])])]);
 }];
 render._withStripped = true;
 

@@ -54,8 +54,6 @@ class CompanyController extends Controller
     public function update(Request $request, $id)
     {
 
-
-
         // Validate the incoming request data
         $validator = Validator::make($request->all(), [
             'name' => 'required',
@@ -85,6 +83,19 @@ class CompanyController extends Controller
         } else {
             // If the company doesn't exist, return an error response
             return response()->json(['message' => 'Company not found'], 404);
+        }
+    }
+
+
+     public function destroy($id)
+    {
+        try {
+            $company = Company::findOrFail($id);
+            $company->delete();
+
+            return response()->json(['message' => 'Company deleted successfully'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to delete company'], 500);
         }
     }
 }
