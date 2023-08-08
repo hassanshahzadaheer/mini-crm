@@ -9,6 +9,10 @@
                                        <router-link to="/companies">Companies</router-link>
                                     </li>
 
+                                     <li class="nav-item">
+                                           <router-link to="/companies/edit">Edit Company</router-link>
+                                        </li>
+
                         </ul>
                     </div>
 

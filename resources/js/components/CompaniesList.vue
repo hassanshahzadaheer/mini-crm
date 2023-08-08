@@ -27,8 +27,12 @@
           <td><a :href="company.website">{{ company.name }}</a></td>
           <td>{{ company.email }}</td>
           <td>
-            <!-- New delete button -->
-             <button @click="confirmDelete(company.id)" class="btn btn-danger btn-sm">Delete</button>
+             <!-- Edit button -->
+              <router-link :to="`/companies/${company.id}/edit`" class="btn btn-primary btn-sm">
+              <i class="fas fa-pencil-alt"></i> Edit
+            </router-link>
+            <!--  delete button -->
+             <button @click="confirmDelete(company.id)" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i> Delete</button>
           </td>
         </tr>
       </tbody>
@@ -58,7 +62,7 @@
 </template>
 <script>
 import axios from 'axios';
-
+import Swal from 'sweetalert2';
 
 export default {
   data() {
@@ -89,10 +93,25 @@ export default {
         });
     },
 
+    editCompany(companyId) {
+      // Implement your edit logic here, e.g., redirect to the edit page
+      console.log(`Editing company with ID: ${companyId}`);
+    },
+
     confirmDelete(id) {
-      if (window.confirm('Are you sure you want to delete this company?')) {
-        this.deleteCompany(id);
-      }
+      Swal.fire({
+        title: 'Are you sure?',
+        text: 'This action cannot be undone.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, delete it!',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.deleteCompany(id);
+        }
+      });
     },
     deleteCompany(companyId) {
       console.log(`Deleting company with ID ${companyId}...`);
