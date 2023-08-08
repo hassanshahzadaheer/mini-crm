@@ -29,10 +29,30 @@ Vue.component(
 import CompaniesList from "./components/CompaniesList.vue";
 import CreateCompanyForm from "./components/CreateCompanyForm.vue";
 import EditCompanyForm from "./components/EditCompanyForm.vue";
+import Vue from "vue";
+import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
+
+import VueRouter from "vue-router";
+
+
+Vue.use(VueRouter);
+// Install BootstrapVue
+Vue.use(BootstrapVue);
+// Optionally install the BootstrapVue icon components plugin
+Vue.use(IconsPlugin);
+
+
+const routes = [{ path: "/companies/create", component: CreateCompanyForm }];
+
+const router = new VueRouter({
+    routes,
+});
 Vue.component("companies-list", CompaniesList);
 Vue.component("create-company-form", CreateCompanyForm);
 Vue.component("edit-company-form", EditCompanyForm);
 
+
 const app = new Vue({
     el: "#app",
+    router,
 });

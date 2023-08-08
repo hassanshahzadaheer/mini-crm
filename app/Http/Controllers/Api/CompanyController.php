@@ -13,10 +13,12 @@ use Validator;
 
 class CompanyController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $companies = Company::all();
-        return CompanyResource::collection($companies);
+
+$companies = Company::paginate(10); // Change the number '10' to your desired items per page
+return CompanyResource::collection($companies);
+
     }
 
     // store data

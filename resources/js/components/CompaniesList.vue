@@ -1,6 +1,13 @@
 <template>
   <div class="container">
-    <h1>Companies List</h1>
+   <div class="d-flex justify-content-between align-items-center">
+        <h1>Companies List</h1>
+        <router-link class="btn btn-success btn-sm text-right" to="/companies/create">
+        Add New Company
+      </router-link>
+      </div>
+
+
     <table class="table table-hover">
       <thead>
         <tr>
@@ -8,7 +15,7 @@
           <th scope="col">Logo</th>
           <th scope="col">Name</th>
           <th scope="col">Email</th>
-          <th scope="col">Actions</th> <!-- New column for delete buttons -->
+          <th scope="col">Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -27,31 +34,62 @@
         </tr>
       </tbody>
     </table>
+
+
+    <div class="d-flex justify-content-center">
+        <b-pagination
+          v-model="currentPage"
+          :total-rows="totalRows"
+          :per-page="perPage"
+          @input="fetchData"
+        >
+          <template #ellipsis-text>
+            <b-spinner small type="grow"></b-spinner>
+            <b-spinner small type="grow"></b-spinner>
+            <b-spinner small type="grow"></b-spinner>
+          </template>
+        </b-pagination>
+      </div>
+
+
+
+
+
   </div>
 </template>
-
 <script>
 import axios from 'axios';
+
 
 export default {
   data() {
     return {
       companies: [],
+       currentPage: 1, // Initialize currentPage
+      perPage: 10,   // Set your desired perPage value
+      totalRows: 0,  // Initialize totalRows
     };
   },
   mounted() {
     this.fetchData();
   },
   methods: {
-    fetchData() {
-      axios.get('/api/companies')
+    navigateToAddCompany() {
+      //  Vue Router to handle navigation, like:
+       this.$router.push({ name: 'companies.create' });
+    },
+ fetchData(page = 1) {
+      axios.get(`/api/companies?page=${page}`)
         .then(response => {
           this.companies = response.data.data;
+          this.currentPage = page;
+          this.totalRows = response.data.meta.total; // Update totalRows here
         })
         .catch(error => {
           console.error('Error fetching data:', error);
         });
     },
+
     confirmDelete(id) {
       if (window.confirm('Are you sure you want to delete this company?')) {
         this.deleteCompany(id);
@@ -68,6 +106,7 @@ export default {
           console.error('Error deleting company:', error);
         });
     },
+
   },
 };
 </script>
