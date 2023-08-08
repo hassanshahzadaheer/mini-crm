@@ -23,9 +23,10 @@ const routes = [
     { path: "/companies", component: CompaniesList },
     { path: "/companies/create", component: CreateCompanyForm },
     {
-        path: "/companies/:id/edit",
+        path: "/companies/:companyId/edit",
         name: "edit-company",
         component: EditCompanyForm,
+        props: true,
     },
 ];
 

@@ -19,7 +19,7 @@
       </thead>
       <tbody>
         <tr v-for="(company, index) in companies" :key="company.id">
-          <td>{{ index + 1 }}</td>
+          <td>{{ company.id }}</td>
           <td>
             <img v-if="company.logo" :src="company.logo" alt="Company Logo"
               style="max-width: 100px; max-height: 100px;" />
@@ -28,7 +28,8 @@
           <td>{{ company.email }}</td>
           <td>
              <!-- Edit button -->
-              <router-link :to="`/companies/${company.id}/edit`" class="btn btn-primary btn-sm">
+
+    <router-link :to="editCompanyLink(company.id)" class="btn btn-primary btn-sm">
               <i class="fas fa-pencil-alt"></i> Edit
             </router-link>
             <!--  delete button -->
@@ -65,6 +66,11 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 
 export default {
+   computed: {
+    editCompanyLink() {
+      return (companyId) => `/companies/${companyId}/edit`;
+    }
+  },
   data() {
     return {
       companies: [],
