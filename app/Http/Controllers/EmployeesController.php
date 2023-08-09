@@ -15,10 +15,9 @@ class EmployeesController extends Controller
     public function index()
     {
 
-// Retrieve paginated employee records
-$employees = Employee::paginate(10);
-return view('employees.index', compact('employees'));
-
+        // Retrieve paginated employee records
+        $employees = Employee::paginate(10);
+        return view('employees.index', compact('employees'));
     }
 
     /**
@@ -28,7 +27,7 @@ return view('employees.index', compact('employees'));
      */
     public function create()
     {
-          // Return your create employee view
+        // Return your create employee view
         return view('employees.create');
     }
 
@@ -63,10 +62,9 @@ return view('employees.index', compact('employees'));
     public function edit($employeeId)
     {
 
-// Retrieve the employee record by ID and return the edit view
-$employee = Employee::findOrFail($employeeId);
-return view('employees.edit', compact('employee'));
-
+        // Retrieve the employee record by ID and return the edit view
+        $employee = Employee::findOrFail($employeeId);
+        return view('employees.edit', compact('employee'));
     }
 
     /**

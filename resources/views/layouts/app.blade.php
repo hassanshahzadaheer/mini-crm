@@ -34,15 +34,18 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
+                    @auth
                     <ul class="navbar-nav me-auto">
 
                         <li>
-                            @auth
                             <router-link to="/companies" class="nav-link">Companies</router-link>
-                            @endauth
+                        </li>
+                        <li>
+                            <router-link to="/employees" class="nav-link">Employees</router-link>
                         </li>
 
                     </ul>
+                    @endauth
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">

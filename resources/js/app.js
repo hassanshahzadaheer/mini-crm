@@ -2,9 +2,10 @@ require("./bootstrap");
 
 import Vue from "vue";
 import VueRouter from "vue-router";
-import CompaniesList from "./components/CompaniesList.vue";
-import CreateCompanyForm from "./components/CreateCompanyForm.vue";
-import EditCompanyForm from "./components/EditCompanyForm.vue";
+import CompaniesList from "./components/companies/CompaniesList.vue";
+import CreateCompanyForm from "./components/companies/CreateCompanyForm.vue";
+import EditCompanyForm from "./components/companies/EditCompanyForm.vue";
+import EmployeeList from "./components/employees/EmployeeList.vue";
 import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
 
 import Home from "./components/home.vue";
@@ -37,6 +38,14 @@ const routes = [
         name: "edit-company",
         component: EditCompanyForm,
         props: true,
+        meta: {
+            requiresAuth: true,
+        },
+    },
+    {
+        path: "/employees",
+        name: "employee-list",
+        component: EmployeeList,
         meta: {
             requiresAuth: true,
         },
