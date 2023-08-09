@@ -26,11 +26,19 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('/api/user', 'UserController@getUser')->middleware('auth');
 
+// companies routes
 
 Route::get('/companies',[CompanyController::class,'index']);
 Route::post('/companies', [CompanyController::class, 'store']);
-
 Route::get('/companies/{companyId}', [CompanyController::class, 'show']);
 Route::put('/companies/{companyId}', [CompanyController::class, 'update']);
-
 Route::delete('/companies/{id}', [CompanyController::class, 'destroy']);
+
+
+// employee routes
+
+Route::get('/employees', 'App\Http\Controllers\API\EmployeesController@index');
+Route::get('/employees/{employee}', 'App\Http\Controllers\API\EmployeesController@show');
+Route::post('/employees', 'App\Http\Controllers\API\EmployeesController@store');
+Route::put('/employees/{employee}', 'App\Http\Controllers\API\EmployeesController@update');
+Route::delete('/employees/{employee}', 'App\Http\Controllers\API\EmployeesController@destroy');
