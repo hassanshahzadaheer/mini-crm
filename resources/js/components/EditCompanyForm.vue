@@ -70,6 +70,7 @@
 
 <script>
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 export default {
   props: {
@@ -172,6 +173,15 @@ export default {
         .then(response => {
           // Handle success, show success message, etc.
           console.log('Company updated:', response.data.data);
+           Swal.fire({
+            title: 'Success',
+            text: response.data.data.name + " Update successfully!",
+            icon: 'success',
+            confirmButtonText: 'OK',
+          }).then(() => {
+            // Redirect to the /companies URL after clicking "OK"
+            this.$router.push('/companies');
+          });
         })
         .catch(error => {
           if (error.response.status === 422) {
