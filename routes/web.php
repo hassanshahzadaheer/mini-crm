@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CompaniesController;
+use App\Http\Controllers\HomeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -30,7 +31,12 @@ Route::group(['middleware' => ['auth']], function () {
     });
 });
 
-// Catch-all route (keep this at the end)
+
+Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
+
+
+
+
 Route::get('/{any}', function () {
-    return view('welcome');
+    return view('layouts.app');
 })->where('any', '.*');

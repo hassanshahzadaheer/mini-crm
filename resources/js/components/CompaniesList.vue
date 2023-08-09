@@ -2,6 +2,7 @@
   <div class="container">
    <div class="d-flex justify-content-between align-items-center">
         <h1>Companies List</h1>
+
     <router-link to="/companies/create" class="btn btn-success btn-sm">Add New Company</router-link>
 
       </div>

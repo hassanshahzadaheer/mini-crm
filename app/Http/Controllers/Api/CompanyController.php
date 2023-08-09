@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use App\Http\Resources\CompanyResource;
+use Validator;
 use App\Models\Company;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
-use Validator;
+use App\Http\Resources\CompanyResource;
+use Illuminate\Support\Facades\Storage;
 
 
 
@@ -16,9 +17,8 @@ class CompanyController extends Controller
     public function index(Request $request)
     {
 
-$companies = Company::paginate(10); // Change the number '10' to your desired items per page
-return CompanyResource::collection($companies);
-
+        $companies = Company::paginate(10); // Change the number '10' to your desired items per page
+        return CompanyResource::collection($companies);
     }
 
     // store data
@@ -53,43 +53,46 @@ return CompanyResource::collection($companies);
         return response()->json(['data' => $company]);
     }
 
-    public function update(Request $request, $id)
-    {
+public function update(Request $request, $id)
+{
 
-        // Validate the incoming request data
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'email' => 'required',
-            'website' => 'nullable',
-        ]);
+    // Validate the incoming request data
+    $validator = Validator::make($request->all(), [
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|max:255',
+        'website' => 'nullable|string|max:255',
 
+    ]);
 
-        // If validation fails, return the error response
-        if ($validator->fails()) {
-
-            return response()->json(['errors' => $validator->errors()], 400);
-        }
-
-        // Update the company record with the new data
-        $affectedRows = Company::where('id', $id)->update([
-            'name' => $request->input('name'),
-            'email' => $request->input('email'),
-            'website' => $request->input('website'),
-        ]);
-
-        // Check if any rows were affected by the update
-        if ($affectedRows > 0) {
-            // Find and return the updated company record
-            $company = Company::find($id);
-            return response()->json(['message' => 'Company updated successfully', 'data' => $company], 200);
-        } else {
-            // If the company doesn't exist, return an error response
-            return response()->json(['message' => 'Company not found'], 404);
-        }
+    // If validation fails, return the error response
+    if ($validator->fails()) {
+        return response()->json(['errors' => $validator->errors()], 400);
     }
 
+    // Find the company record
+    $company = Company::findOrFail($id);
 
-     public function destroy($id)
+    // Update other fields like name, email, and website
+    $company->update([
+        'name' => $request->input('name'),
+        'email' => $request->input('email'),
+        'website' => $request->input('website'),
+    ]);
+
+    // Handle the logo file upload (if provided)
+
+if ($request->hasFile('logo')) {
+    $logoPath = $request->file('logo')->store('public/logos');
+    // Update the database logo field with the new path
+    $company->update(['logo' => $request->input('modifiedLogoFilename')]);
+}
+
+
+    return response()->json(['message' => 'Company updated successfully', 'data' => $company], 200);
+}
+
+
+    public function destroy($id)
     {
         try {
             $company = Company::findOrFail($id);
