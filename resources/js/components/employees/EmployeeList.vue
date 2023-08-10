@@ -1,6 +1,12 @@
 <template>
     <div class="container">
-        <h1>Employee List</h1>
+        <div class="d-flex justify-content-between align-items-center">
+            <h1>Employees List</h1>
+
+        <router-link to="/employees/create" class="btn btn-success btn-sm">Add New Employee</router-link>
+
+          </div>
+
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -97,16 +103,34 @@ export default {
             });
         },
         deleteEmployee(employeeId) {
-            console.log(`Deleting employee with ID ${employeeId}...`);
-            axios.delete(`/api/employees/${employeeId}`)
+            axios.get(`/api/employees/${employeeId}`)
                 .then(response => {
-                    console.log('Employee deleted:', response.data.message);
-                    this.fetchData();
+                    const employee = response.data.data;
+                    if (employee.company_id !== null) {
+                        // Employee has a company reference, show alert
+                        Swal.fire({
+                            title: 'Cannot Delete Employee',
+                            text: 'This employee is associated with a company. Please remove the company reference before deleting.',
+                            icon: 'warning',
+                            confirmButtonText: 'OK',
+                        });
+                    } else {
+                        // No company reference, proceed with deletion
+                        axios.delete(`/api/employees/${employeeId}`)
+                            .then(response => {
+                                console.log('Employee deleted:', response.data.message);
+                                this.fetchData();
+                            })
+                            .catch(error => {
+                                console.error('Error deleting employee:', error);
+                            });
+                    }
                 })
                 .catch(error => {
-                    console.error('Error deleting employee:', error);
+                    console.error('Error fetching employee details:', error);
                 });
         },
+
     },
 };
 </script>

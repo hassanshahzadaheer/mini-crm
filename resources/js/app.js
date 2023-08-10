@@ -6,7 +6,10 @@ import CompaniesList from "./components/companies/CompaniesList.vue";
 import CreateCompanyForm from "./components/companies/CreateCompanyForm.vue";
 import EditCompanyForm from "./components/companies/EditCompanyForm.vue";
 import EmployeeList from "./components/employees/EmployeeList.vue";
-import EditEmployee from './components/employees/EditEmployee.vue'; // .vue";
+import AddNewEmployee from "./components/employees/AddEmployee.vue";
+import EditEmployee from './components/employees/EditEmployee.vue';
+
+
 import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
 
 import Home from "./components/home.vue";
@@ -23,12 +26,13 @@ Vue.component("companies-list", CompaniesList);
 Vue.component("create-company-form", CreateCompanyForm);
 Vue.component("edit-company-form", EditCompanyForm);
 Vue.component("edit-employee-form", EditEmployee);
+Vue.component("add-new-employee", AddNewEmployee);
 Vue.component("home", Home);
 
 const routes = [
     { path: "/companies", component: CompaniesList },
     {
-        path: "/companies/create",
+        path: "p",
         component: CreateCompanyForm,
         name: "create-company",
         meta: {
@@ -56,6 +60,12 @@ const routes = [
         path: "/employees/:employeeId/edit",
         name: "edit-employee",
         component: EditEmployee,
+        props: true,
+    },
+    {
+        path: "/employees/create",
+        name: "create-employee",
+        component: AddNewEmployee,
         props: true,
     },
     {
