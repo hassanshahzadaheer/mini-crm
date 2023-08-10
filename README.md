@@ -1,64 +1,59 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+**Prerequisites:**
+- Node.js and npm (Node Package Manager) installed.
+- Composer installed.
+- Laravel project already set up.
 
-## About Laravel
+**Step 1: Clone the Repository:**
+1. Clone your Laravel project repository to your local machine using Git.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+**Step 2: Install Dependencies:**
+1. Open a terminal and navigate to the project directory.
+2. Run the following commands:
+   ```bash
+   npm install           # Install JavaScript dependencies
+   composer install      # Install PHP dependencies
+   ```
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+**Step 3: Configure Laravel:**
+1. Configure your `.env` file with necessary database and environment settings.
+2. Generate an application key using:
+   ```bash
+   php artisan key:generate
+   ```
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+**Step 4: Configure Vue.js:**
+1. Open the `resources/js/app.js` file.
+2. Set up your Vue components and routes as needed. You can refer to previous examples for guidance.
 
-## Learning Laravel
+**Step 5: Build and Watch:**
+1. Run the following command to compile your assets and watch for changes:
+   ```bash
+   npm run watch
+   ```
+   This will continuously compile your Vue components and assets as you make changes.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+**Step 6: Seeding Data:**
+1. To populate your database with sample data, Laravel provides a convenient way to seed your database tables.
+1. Run the seeder using the following command:
+   ```bash
+   php artisan db:seed --class=EmployeeSeeder
+   ```
+2. This will populate the `employees` table with 10 sample records.
 
-## Laravel Sponsors
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
 
-### Premium Partners
+**Step 7: Serve the Application:**
+1. In a new terminal window, navigate to the project directory.
+2. Run the following command to start the Laravel development server:
+   ```bash
+   php artisan serve
+   ```
+   This will serve your Laravel application at `http://localhost:8000`.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
 
-## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+**Step 8: Access the Application:**
+1. Open your web browser and visit `http://localhost:8000`.
+2. You should see your Laravel application running with the Vue.js components.
