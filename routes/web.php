@@ -15,7 +15,7 @@ use App\Http\Controllers\HomeController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 Auth::routes();
@@ -29,7 +29,6 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/companies/{companyId}/edit', 'App\Http\Controllers\CompaniesController@edit')->name('companies.edit');
         Route::put('/companies/{companyId}/update', 'App\Http\Controllers\CompaniesController@update')->name('companies.update');
 
-
         // Employee routes
         Route::get('/employees', 'App\Http\Controllers\EmployeesController@index')->name('employees.index');
         Route::get('/employees/create', 'App\Http\Controllers\EmployeesController@create')->name('employees.create');
@@ -40,12 +39,10 @@ Route::group(['middleware' => ['auth']], function () {
     });
 });
 
-
+// go to home dashboard
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
 
-
-
-
+// let vue know that there are some routes
 Route::get('/{any}', function () {
     return view('layouts.app');
 })->where('any', '.*');

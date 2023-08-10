@@ -31,11 +31,10 @@
                 </div>
 
 
-              <button type="submit" class="btn btn-primary btn-lg text-center mt-4">
-              <i class="fas fa-plus"></i>
-                <span class="mr-2 text-center">Create</span>
-
-            </button>
+                <button type="submit" class="btn btn-primary btn-lg text-center mt-4" :disabled="isLoading">
+                    <i class="fas fa-plus"></i>
+                    <span class="mr-2 text-center">{{ isLoading ? 'Sending...' : 'Create' }}</span>
+                </button>
             </form>
 
 
@@ -64,7 +63,7 @@ export default {
         };
     },
     methods: {
-        submitForm() {
+      submitForm() {
             // Validate fields
             const validName = this.formData.name.trim() !== '';
             const validEmail = this.validateEmail(this.formData.email);
@@ -74,6 +73,9 @@ export default {
                 return;
             }
 
+            // Start loading state
+            this.isLoading = true;
+
             // Submission logic using axios
             const formData = new FormData();
             formData.append('name', this.formData.name);
@@ -81,6 +83,7 @@ export default {
             formData.append('website', this.formData.website);
             formData.append('logo', this.formData.logo);
 
+            // Send request to create a company
             axios
                 .post('/api/companies', formData, {
                     headers: {
@@ -88,26 +91,34 @@ export default {
                     },
                 })
                 .then(response => {
-                    // Handle success, show success message, etc.
-                    console.log('Company created:', response.data.data);
-                     Swal.fire({
+                    // Handle success
+                    Swal.fire({
                         title: 'Success',
                         text: 'Company created successfully!',
                         icon: 'success',
                         confirmButtonText: 'OK',
                     }).then(() => {
-                        // Redirect to the /companies URL after clicking "OK"
                         this.$router.push('/companies');
                     });
+
+                    // Reset loading state
+                    this.isLoading = false;
                 })
                 .catch(error => {
-                    // Handle error, show error message, etc.
-                    console.error('Error creating company:', error);
+                    // Handle error
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'An error occurred while creating the company.',
+                        icon: 'error',
+                        confirmButtonText: 'OK',
+                    });
+
+                    // Reset loading state
+                    this.isLoading = false;
                 });
         },
+
         validateEmail(email) {
-            // Add your email validation logic here
-            // For example, you can use a regular expression
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             return emailRegex.test(email);
         },

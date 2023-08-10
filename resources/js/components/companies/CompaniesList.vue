@@ -79,27 +79,35 @@ export default {
     this.fetchData();
   },
   methods: {
+    // Navigate to the add company page using Vue Router
     navigateToAddCompany() {
-      //  Vue Router to handle navigation, like:
-       this.$router.push({ name: 'companies.create' });
+      this.$router.push({ name: 'companies.create' });
     },
- fetchData(page = 1) {
+
+    // Fetch data from the API for displaying companies
+    fetchData(page = 1) {
       axios.get(`/api/companies?page=${page}`)
         .then(response => {
           this.companies = response.data.data;
           this.currentPage = page;
-          this.totalRows = response.data.meta.total; // Update totalRows here
+          this.totalRows = response.data.meta.total;
         })
         .catch(error => {
-          console.error('Error fetching data:', error);
+          Swal.fire({
+            title: 'Error',
+            text: 'An error occurred while fetching data.',
+            icon: 'error',
+            confirmButtonText: 'OK',
+          });
         });
     },
 
+    // Edit company logic (not implemented)
     editCompany(companyId) {
-      // Implement your edit logic here, e.g., redirect to the edit page
-      console.log(`Editing company with ID: ${companyId}`);
+
     },
 
+    // Confirm deletion of a company using Swal alert
     confirmDelete(id) {
       Swal.fire({
         title: 'Are you sure?',
@@ -115,18 +123,39 @@ export default {
         }
       });
     },
+
+    // Delete a company and show Swal alert on success/error
     deleteCompany(companyId) {
-      console.log(`Deleting company with ID ${companyId}...`);
+      Swal.fire({
+        title: 'Deleting Company',
+        text: 'Please wait...',
+        icon: 'info',
+        showCancelButton: false,
+        showConfirmButton: false,
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        allowEnterKey: false,
+      });
+
       axios.delete(`/api/companies/${companyId}`)
         .then(response => {
-          console.log('Company deleted:', response.data.message);
+          Swal.fire({
+            title: 'Success',
+            text: response.data.message,
+            icon: 'success',
+            confirmButtonText: 'OK',
+          });
           this.fetchData();
         })
         .catch(error => {
-          console.error('Error deleting company:', error);
+          Swal.fire({
+            title: 'Error',
+            text: 'An error occurred while deleting the company.',
+            icon: 'error',
+            confirmButtonText: 'OK',
+          });
         });
     },
-
   },
 };
 </script>
