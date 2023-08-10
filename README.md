@@ -1,4 +1,3 @@
-
 **Prerequisites:**
 - Node.js and npm (Node Package Manager) installed.
 - Composer installed.
@@ -21,6 +20,16 @@
    ```bash
    php artisan key:generate
    ```
+3. Set up your Mailtrap credentials in the `.env` file for email testing. Get your credentials from [Mailtrap](https://mailtrap.io/):
+   ```env
+   MAIL_MAILER=smtp
+   MAIL_HOST=smtp.mailtrap.io
+   MAIL_PORT=2525
+   MAIL_USERNAME=your_mailtrap_username
+   MAIL_PASSWORD=your_mailtrap_password
+   MAIL_ENCRYPTION=tls
+   ```
+4. Make sure to replace `your_mailtrap_username` and `your_mailtrap_password` with your actual Mailtrap credentials.
 
 **Step 4: Configure Vue.js:**
 1. Open the `resources/js/app.js` file.
@@ -33,16 +42,13 @@
    ```
    This will continuously compile your Vue components and assets as you make changes.
 
-
 **Step 6: Seeding Data:**
 1. To populate your database with sample data, Laravel provides a convenient way to seed your database tables.
-1. Run the seeder using the following command:
+2. Run the seeder using the following command:
    ```bash
    php artisan db:seed --class=EmployeeSeeder
    ```
-2. This will populate the `employees` table with 10 sample records.
-
-
+3. This will populate the `employees` table with 10 sample records.
 
 **Step 7: Serve the Application:**
 1. In a new terminal window, navigate to the project directory.
@@ -51,8 +57,6 @@
    php artisan serve
    ```
    This will serve your Laravel application at `http://localhost:8000`.
-
-
 
 **Step 8: Access the Application:**
 1. Open your web browser and visit `http://localhost:8000`.
