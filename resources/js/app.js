@@ -32,7 +32,7 @@ Vue.component("home", Home);
 const routes = [
     { path: "/companies", component: CompaniesList },
     {
-        path: "p",
+        path: "/companies/create",
         component: CreateCompanyForm,
         name: "create-company",
         meta: {

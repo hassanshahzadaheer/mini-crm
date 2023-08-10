@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use App\Models\Company;
 use App\Models\Employee;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Http\Resources\EmployeeResource;
+use Illuminate\Support\Facades\Validator;
 
 class EmployeeController extends Controller
 {
@@ -80,4 +81,17 @@ class EmployeeController extends Controller
             return response()->json(['message' => 'Failed to delete employee'], 500);
         }
     }
+
+    public function getTotal()
+{
+    $totalEmployees = Employee::count();
+    $totalCompanies = Company::count();
+
+
+    return response()->json([
+        'totalEmployees' => $totalEmployees,
+        'totalCompanies' => $totalCompanies,
+    ]);
+}
+
 }

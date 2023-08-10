@@ -15,15 +15,12 @@ use App\Http\Controllers\Api\EmployeesController;
 |
 */
 
-Route::post('/login', 'App\Http\Controllers\Auth\LoginController@login');
-Route::post('/logout', 'App\Http\Controllers\Auth\LoginController@logout');
-Route::post('/register', 'App\Http\Controllers\Auth\RegisterController@register');
-
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
 
+// user api
 
 Route::get('/api/user', 'UserController@getUser')->middleware('auth');
 
@@ -43,3 +40,8 @@ Route::get('/employees/{employee}', 'App\Http\Controllers\Api\EmployeeController
 Route::post('/employees', 'App\Http\Controllers\Api\EmployeeController@store');
 Route::put('/employees/{employee}', 'App\Http\Controllers\Api\EmployeeController@update');
 Route::delete('/employees/{employee}', 'App\Http\Controllers\Api\EmployeeController@destroy');
+
+
+// get Statistics of employee and
+
+Route::get('totals', 'App\Http\Controllers\Api\EmployeeController@getTotal');
